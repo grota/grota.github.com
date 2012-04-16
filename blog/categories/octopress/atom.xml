@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Octopress, | Milking yaks]]></title>
-  <link href="http://grota.github.com/blog/categories/octopress-/atom.xml" rel="self"/>
+  <title><![CDATA[Category: Octopress | Milking yaks]]></title>
+  <link href="http://grota.github.com/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://grota.github.com/"/>
-  <updated>2012-04-15T21:09:05+02:00</updated>
+  <updated>2012-04-16T15:06:48+02:00</updated>
   <id>http://grota.github.com/</id>
   <author>
     <name><![CDATA[Giuseppe Rota]]></name>
@@ -29,7 +29,7 @@ What I like about it is its nice look, the github integration, but most importan
 <p>I've always been more of a sponge rather than a contributor (hence the blog name), so I'm just gonna go ahead and say that I most likely won't be able to keep blogging for long.<br/>
 I am also trying hard not transform this in a place where I rant endlessly because I already do enough of that in real life and that's not an healthy habit.</p>
 
-<p>I just want to use it to study a bunch of cool technologies, like <a href="https://github.com/mojombo/jekyll">jekyll</a>, <a href="http://sass-lang.org">sass</a>, and the various flavours of markdown available: <a href="https://github.com/rtomayko/rdiscount">rdiscount</a>, <a href="https://github.com/tanoku/redcarpet">redcarpet</a>, <a href="http://kramdown.rubyforge.org/">kramdown</a>, <a href="http://maruku.rubyforge.org/">maruku</a>.<br/>
+<p>I just want to use it to study a bunch of cool technologies, like <a href="https://github.com/mojombo/jekyll">jekyll</a>, <a href="http://sass-lang.com">sass</a>, and the various flavours of markdown available: <a href="https://github.com/rtomayko/rdiscount">rdiscount</a>, <a href="https://github.com/tanoku/redcarpet">redcarpet</a>, <a href="http://kramdown.rubyforge.org/">kramdown</a>, <a href="http://maruku.rubyforge.org/">maruku</a>.<br/>
 I can already see in the near future a style change: I like uniform color schemes where the main content has only a slight color difference than the background of the body, but then again I'm a fan of the <em>green-on-black</em> style of the unix console, so I might be biased.</p>
 ]]></content>
   </entry>
