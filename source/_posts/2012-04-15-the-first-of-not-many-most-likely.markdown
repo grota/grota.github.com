@@ -3,7 +3,7 @@ layout: post
 title: "The First of not many. (most likely)"
 date: 2012-04-15 17:05
 comments: true
-categories: Octopress, Markdown
+categories: [Octopress, Markdown]
 ---
 
 So I finally managed to set up [Octopress](http://octopress.org/).
