@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: linux | Milking yaks]]></title>
+  <link href="http://grota.github.com/blog/categories/linux/atom.xml" rel="self"/>
+  <link href="http://grota.github.com/"/>
+  <updated>2012-04-17T19:26:30+02:00</updated>
+  <id>http://grota.github.com/</id>
+  <author>
+    <name><![CDATA[Giuseppe Rota]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Vertical cursor for terminal vim using gnome-terminal]]></title>
+    <link href="http://grota.github.com/blog/2012/04/17/vertical-cursor-for-terminal-vim-using-gnome-terminal/"/>
+    <updated>2012-04-17T18:31:00+02:00</updated>
+    <id>http://grota.github.com/blog/2012/04/17/vertical-cursor-for-terminal-vim-using-gnome-terminal</id>
+    <content type="html"><![CDATA[<p>A few people know I am a vim aficionado, and I figured I could share a little bit of my vim knowledge on this blog.
+While browsing the <a href="http://reddit.com/r/vim">r/vim subreddit</a> a while ago I found a little piece of vim configuration that lets you have a vertical bar for the cursor in terminal vim, using gnome-terminal as a terminal emulator.</p>
+
+<!-- more -->
+
+
+<p>Without further ado, here's the snippet, which you can put in your <code>.vimrc</code>, for example.</p>
+
+<p><code>vim
+if has("autocmd") &amp;&amp; has('GUI_GTK')
+  au InsertEnter * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape ibeam"
+  au InsertLeave * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape block"
+  au VimLeave * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape block"
+endif
+</code></p>
+
+<p>Those of you using <code>gvim</code> might already have this, since the feature is builtin and might only need to be enabled.</p>
+
+<p>If you use gnome-terminal in Linux, on the other hand, this is not natively supported, and it might be on your <em>nice-to-have</em> list, especially if you use tmux.</p>
+]]></content>
+  </entry>
+  
+</feed>
