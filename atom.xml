@@ -4,7 +4,7 @@
   <title><![CDATA[Milking Yaks]]></title>
   <link href="http://grota.github.com/atom.xml" rel="self"/>
   <link href="http://grota.github.com/"/>
-  <updated>2012-04-17T19:34:07+02:00</updated>
+  <updated>2012-04-22T19:47:08+02:00</updated>
   <id>http://grota.github.com/</id>
   <author>
     <name><![CDATA[Giuseppe Rota]]></name>
@@ -12,6 +12,29 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Tmux: a terminal multiplexer full of niceties]]></title>
+    <link href="http://grota.github.com/blog/2012/04/22/tmux-a-terminal-multiplexer-full-of-niceties/"/>
+    <updated>2012-04-22T18:22:00+02:00</updated>
+    <id>http://grota.github.com/blog/2012/04/22/tmux-a-terminal-multiplexer-full-of-niceties</id>
+    <content type="html"><![CDATA[<p><a href="http://tmux.sourceforge.net/" title="tmux">Tmux</a> is a terminal multiplexer that has been around for a few years; doing a simple google search you will find some <a href="http://blog.hawkhost.com/2010/06/28/tmux-the-terminal-multiplexer/" title="hawkhost article">introductory</a> <a href="http://mutelight.org/articles/practical-tmux" title="Practical tmux">articles</a>.</p>
+
+<p>There are quite a few plugins that create a seamless integration with <code>vim</code>: <a href="https://github.com/sjl/tslime.vim" title="Steve Losh's tslime">tslime</a>, <a href="http://thechangelog.com/post/20906204174/vimux-simple-extensible-vim-integration-with-tmux" title="vimux article">vimux</a> and <a href="http://esa-matti.suuronen.org/blog/2012/04/19/slimux-tmux-plugin-for-vim/" title="slimux">slimux</a>. People also use tmux extensively for <a href="http://thechangelog.com/post/20986196780/wemux-multi-user-terminal-multiplexing-for-party-pair-pr" title="wemux">remote pair programming</a>.</p>
+
+<p>Tmux is a nicer and more modern alternative to screen. Beside being actively mantained tmux is also extremely configurable and scriptable.</p>
+
+<p>I discovered tmux only recently, mainly thanks to the <a href="http://thechangelog.com/tagged/tmux" title="The Changelog, #tmux">Changelog show</a> and the resulting buzz on the twittersphere. It was only a matter of time before a customized <code>.tmux.conf</code> entered the realms of <a href="http://github.com/grota/rcfiles" title="My rc files">my dotfiles</a>.</p>
+
+<p>If you are a developer you work on text all day, and you might have a few script or long-running jobs executing in the shell. If that&#8217;s the case, it&#8217;s also very likely that you have to constantly switch between those applications.</p>
+
+<p>You might not be aware of that, but constantly switching focus takes a toll on your brain, is a source of distraction, and is a major hindrance towards achieving what us developers crave, a state of mental performance called <strong><em><a href="http://en.wikipedia.org/wiki/Flow_(psychology)" title="The Flow, from wikipedia">the flow</a></em></strong>.
+If that is case you should know that adopting a workflow based on tmux can reduce a lot of that background stress.<br/>
+The most common pattern that emerges, for example, is being able to keep opened, side by side in the same tmux window, two panes: one with the shell and the other with terminal vim.</p>
+
+<p>In the next post I&#8217;ll describe how tmux helped me reduce a lot of the context switch that is major annoyance of mine while working, and a few configuration settings that make working with tmux a pleasure.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Vertical cursor for terminal vim using gnome-terminal]]></title>
