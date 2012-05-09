@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>The First of not many. (most likely) - Milking Yaks</title>
+  <title>Tmux: Clipboard Integration - Milking Yaks</title>
   <meta name="author" content="Giuseppe Rota">
 
   
-  <meta name="description" content="So I finally managed to set up Octopress. If you don&#8217;t know what Octopress is, suffice it to say that it is a blogging tool that makes it easy &hellip;">
+  <meta name="description" content="This post is a follow-up to my introduction to tmux. Since it is not feasible to go through all of my .tmux.conf settings, I&#8217;ll keep this post &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://grota.github.com/blog/2012/04/15/the-first-of-not-many-most-likely">
+  <link rel="canonical" href="http://grota.github.com/blog/2012/05/08/tmux-clipboard-integration">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -79,7 +79,7 @@
   
   <header>
     
-      <h1 class="entry-title">The First of Not Many. (Most Likely)</h1>
+      <h1 class="entry-title">Tmux: Clipboard Integration</h1>
     
     
       <p class="meta">
@@ -95,26 +95,74 @@
   
 
 
-<time datetime="2012-04-15T17:05:00+02:00" pubdate data-updated="true">15/04/2012</time>
+<time datetime="2012-05-08T22:55:00+02:00" pubdate data-updated="true">08/05/2012</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>So I finally managed to set up <a href="http://octopress.org/">Octopress</a>.</p>
+<div class="entry-content"><p>This post is a follow-up to <a href="/blog/2012/04/22/tmux-a-terminal-multiplexer-full-of-niceties/">my introduction to tmux</a>.</p>
 
-<p>If you don&#8217;t know what Octopress is, suffice it to say that it is a blogging tool that makes it easy to create blog posts in <a href="http://daringfireball.net/projects/markdown/syntax">Markdown</a> and integrates seamlessly with <a href="http://pages.github.com">Github Pages</a>.<br/>
-What I like about it is its nice look, the github integration, but most importantly the fact that it makes it easy to create blog posts simply by opening my editor of choice, <code>vim</code>.</p>
+<p>Since it is not feasible to go through all of my <a href="https://github.com/grota/dotfiles/blob/master/tmux/_tmux.conf">.tmux.conf</a> settings, I&#8217;ll keep this post short and only talk about tmux&#8217;s clipboard features, how I customized them, and how they relate to my workflow. Hopefully you will be able to find some value in this and be able to integrate my configuration snippets in your workflow.</p>
 
 <!-- more -->
 
 
-<p>I&#8217;ve always been more of a sponge rather than a contributor (hence the blog name), so I&#8217;m just gonna go ahead and say that I most likely won&#8217;t be able to keep blogging for long.<br/>
-I am also trying hard not transform this in a place where I rant endlessly because I already do enough of that in real life and that&#8217;s not an healthy habit.</p>
+<p>Working in Linux, I am blessed by having two clipboards, a <em>system clipboard</em> (filled in by the typical <code>Ctrl-C</code> key combination) and the <em>selection clipboard</em>, (filled in by the mouse selection).
+Since I usually keep fidgeting text in the browser with the mouse, the selection clipboard is more volatile for me.</p>
 
-<p>I just want to use it to study a bunch of cool technologies, like <a href="https://github.com/mojombo/jekyll">jekyll</a>, <a href="http://sass-lang.com">sass</a>, and the various flavours of markdown available: <a href="https://github.com/rtomayko/rdiscount">rdiscount</a>, <a href="https://github.com/tanoku/redcarpet">redcarpet</a>, <a href="http://kramdown.rubyforge.org/">kramdown</a>, <a href="http://maruku.rubyforge.org/">maruku</a>.<br/>
-I can already see in the near future a style change: I like uniform color schemes where the main content has only a slight color difference than the background of the body, but then again I&#8217;m a fan of the <em>green-on-black</em> style of the unix console, so I might be biased.</p>
+<p>Tmux, like vim, is modal: by typing the right sequence of keys you enter the so called <em>copy mode</em> which permits a section of a window or its history to be copied to a paste buffer for later insertion into another window.</p>
+
+<p>The cool thing, compared to the system and selection clipboards, is that it&#8217;s actually a set of buffers.
+You can even list them, see the picture below.</p>
+
+<p><img class="center" src="/images/posts/tmux_paste_buffers.png"></p>
+
+<p>A common requirement that pops up in my workflow is being able to both read and write to the selection and system clipboards from tmux. For example:</p>
+
+<ul>
+<li>I need some text that is currently in my browser to reach <code>bash</code> and <code>vim</code> running inside tmux.</li>
+<li>I need to copy some text inside the terminal (like some snippet of code, or a script output) into the browser.</li>
+</ul>
+
+
+<p>Both can be obtained by putting the following snippet of tmux configuration inside <code>.tmux.conf</code></p>
+
+<figure class='code'><figcaption><span>A piece of my .tmux.conf </span><a href='https://github.com/grota/dotfiles/blob/master/tmux/_tmux.conf'>Sauce</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># C-c: save into system clipboard (+). With preselection.</span>
+</span><span class='line'><span class="nb">bind </span>C-c choose-buffer <span class="s2">&quot;run \&quot;tmux save-buffer -b %% - | xclip -i -sel clipboard\&quot; \; run \&quot; tmux display \\\&quot;Clipboard \(+\) filled with: $(tmux save-buffer -b %1 - | dd ibs=1 obs=1 status=noxfer count=80 2&gt; /dev/null)... \\\&quot; \&quot; &quot;</span>
+</span><span class='line'><span class="c"># C-v: copy from + clipboard.</span>
+</span><span class='line'><span class="nb">bind </span>C-v run <span class="s2">&quot;tmux set-buffer \&quot;$(xclip -o -sel clipboard)\&quot;; tmux paste-buffer&quot;</span> <span class="se">\;</span> run <span class="s2">&quot;tmux display \&quot;Copied from \(+\) $(xclip -o -sel clipboard | dd ibs=1 obs=1 status=noxfer count=80 2&gt; /dev/null)... \&quot;&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># C-d: save into selection clipboard (*). With preselection.</span>
+</span><span class='line'><span class="nb">bind </span>C-d choose-buffer <span class="s2">&quot;run \&quot;tmux save-buffer -b %% - | xclip -i\&quot; \; run \&quot; tmux display \\\&quot;Clipboard \(*\) filled with: $(tmux save-buffer -b %1 - | dd ibs=1 obs=1 status=noxfer count=80 2&gt; /dev/null)... \\\&quot; \&quot; &quot;</span>
+</span><span class='line'><span class="c"># C-f: copy from * clipboard.</span>
+</span><span class='line'><span class="nb">bind </span>C-f run <span class="s2">&quot;tmux set-buffer \&quot;$(xclip -o)\&quot;; tmux paste-buffer&quot;</span> <span class="se">\;</span> run <span class="s2">&quot;tmux display \&quot;Copied from \(*\) $(xclip -o | dd ibs=1 obs=1 status=noxfer count=80 2&gt; /dev/null)... \&quot;&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>this makes use of the <a href="http://sourceforge.net/projects/xclip/">xclip</a> program to access the system and selection clipboards.</p>
+
+<p>Now, while in tmux:</p>
+
+<ol>
+<li>Everytime you press the <code>prefix</code> key followed by <code>C-v</code> you will get the content of the system clipboard inside tmux.</li>
+<li>Everytime you press the <code>prefix</code> key followed by <code>C-c</code> you will be asked to choose from the list of tmux paste-buffers. The buffer selected will be put into the system clipboard.</li>
+</ol>
+
+
+<p>The same <em>copy/paste</em> behaviour can be applied to the selection clipboard by using <code>C-f</code> and <code>C-d</code>.</p>
+
+<p>Now admittedly point 1 above is not strictly necessary because there are usually system-wide shortcuts to do that, (<code>Shift-Ctrl-v</code> and <code>Shift-Insert</code> are the usual defaults in Linux) but I&#8217;m a sucker for symmetry.</p>
 </div>
 
 
@@ -137,12 +185,12 @@ I can already see in the near future a style change: I like uniform color scheme
   
 
 
-<time datetime="2012-04-15T17:05:00+02:00" pubdate data-updated="true">15/04/2012</time>
+<time datetime="2012-05-08T22:55:00+02:00" pubdate data-updated="true">08/05/2012</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/markdown/'>Markdown</a>, <a class='category' href='/blog/categories/octopress/'>Octopress</a>
+    <a class='category' href='/blog/categories/dotfiles/'>dotfiles</a>, <a class='category' href='/blog/categories/tmux/'>tmux</a>
   
 </span>
 
@@ -151,7 +199,7 @@ I can already see in the near future a style change: I like uniform color scheme
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://grota.github.com/blog/2012/04/15/the-first-of-not-many-most-likely/" data-via="bittastic" data-counturl="http://grota.github.com/blog/2012/04/15/the-first-of-not-many-most-likely/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://grota.github.com/blog/2012/05/08/tmux-clipboard-integration/" data-via="bittastic" data-counturl="http://grota.github.com/blog/2012/05/08/tmux-clipboard-integration/" >Tweet</a>
   
   
   
@@ -162,8 +210,8 @@ I can already see in the near future a style change: I like uniform color scheme
     
     <p class="meta">
       
+        <a class="basic-alignment left" href="/blog/2012/04/22/tmux-a-terminal-multiplexer-full-of-niceties/" title="Previous Post: Tmux: a terminal multiplexer full of niceties">&laquo; Tmux: a terminal multiplexer full of niceties</a>
       
-        <a class="basic-alignment right" href="/blog/2012/04/17/vertical-cursor-for-terminal-vim-using-gnome-terminal/" title="Next Post: Vertical cursor for terminal vim using gnome-terminal">Vertical cursor for terminal vim using gnome-terminal &raquo;</a>
       
     </p>
   </footer>
@@ -284,8 +332,8 @@ I can already see in the near future a style change: I like uniform color scheme
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://grota.github.com/blog/2012/04/15/the-first-of-not-many-most-likely/';
-        var disqus_url = 'http://grota.github.com/blog/2012/04/15/the-first-of-not-many-most-likely/';
+        var disqus_identifier = 'http://grota.github.com/blog/2012/05/08/tmux-clipboard-integration/';
+        var disqus_url = 'http://grota.github.com/blog/2012/05/08/tmux-clipboard-integration/';
         var disqus_script = 'embed.js';
       
     (function () {

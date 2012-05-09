@@ -4,7 +4,7 @@
   <title><![CDATA[Category: tmux | Milking Yaks]]></title>
   <link href="http://grota.github.com/blog/categories/tmux/atom.xml" rel="self"/>
   <link href="http://grota.github.com/"/>
-  <updated>2012-04-24T17:52:48+02:00</updated>
+  <updated>2012-05-09T23:43:37+02:00</updated>
   <id>http://grota.github.com/</id>
   <author>
     <name><![CDATA[Giuseppe Rota]]></name>
@@ -12,6 +12,75 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Tmux: Clipboard Integration]]></title>
+    <link href="http://grota.github.com/blog/2012/05/08/tmux-clipboard-integration/"/>
+    <updated>2012-05-08T22:55:00+02:00</updated>
+    <id>http://grota.github.com/blog/2012/05/08/tmux-clipboard-integration</id>
+    <content type="html"><![CDATA[<p></p>
+
+<p>This post is a follow-up to <a href="">my introduction to tmux</a>.</p>
+
+<p>Since it is not feasible to go through all of my <a href="https://github.com/grota/dotfiles/blob/master/tmux/_tmux.conf">.tmux.conf</a> settings, I'll keep this post short and only talk about tmux's clipboard features, how I customized them, and how they relate to my workflow. Hopefully you will be able to find some value in this and be able to integrate my configuration snippets in your workflow.</p>
+
+<!-- more -->
+
+
+<p>Working in Linux, I am blessed by having two clipboards, a <em>system clipboard</em> (filled in by the typical <code>Ctrl-C</code> key combination) and the <em>selection clipboard</em>, (filled in by the mouse selection).
+Since I usually keep fidgeting text in the browser with the mouse, the selection clipboard is more volatile for me.</p>
+
+<p>Tmux, like vim, is modal: by typing the right sequence of keys you enter the so called <em>copy mode</em> which permits a section of a window or its history to be copied to a paste buffer for later insertion into another window.</p>
+
+<p>The cool thing, compared to the system and selection clipboards, is that it's actually a set of buffers.
+You can even list them, see the picture below.</p>
+
+<p><img class="center" src="/images/posts/tmux_paste_buffers.png"></p>
+
+<p>A common requirement that pops up in my workflow is being able to both read and write to the selection and system clipboards from tmux. For example:</p>
+
+<ul>
+<li>I need some text that is currently in my browser to reach <code>bash</code> and <code>vim</code> running inside tmux.</li>
+<li>I need to copy some text inside the terminal (like some snippet of code, or a script output) into the browser.</li>
+</ul>
+
+
+<p>Both can be obtained by putting the following snippet of tmux configuration inside <code>.tmux.conf</code></p>
+
+<p>```bash A piece of my .tmux.conf https://github.com/grota/dotfiles/blob/master/tmux/_tmux.conf Sauce</p>
+
+<h1>C-c: save into system clipboard (+). With preselection.</h1>
+
+<p>bind C-c choose-buffer "run \"tmux save-buffer -b %% - | xclip -i -sel clipboard\" \; run \" tmux display \\"Clipboard (+) filled with: $(tmux save-buffer -b %1 - | dd ibs=1 obs=1 status=noxfer count=80 2> /dev/null)... \\" \" "</p>
+
+<h1>C-v: copy from + clipboard.</h1>
+
+<p>bind C-v run "tmux set-buffer \"$(xclip -o -sel clipboard)\"; tmux paste-buffer" \; run "tmux display \"Copied from (+) $(xclip -o -sel clipboard | dd ibs=1 obs=1 status=noxfer count=80 2> /dev/null)... \""</p>
+
+<h1>C-d: save into selection clipboard (*). With preselection.</h1>
+
+<p>bind C-d choose-buffer "run \"tmux save-buffer -b %% - | xclip -i\" \; run \" tmux display \\"Clipboard (*) filled with: $(tmux save-buffer -b %1 - | dd ibs=1 obs=1 status=noxfer count=80 2> /dev/null)... \\" \" "</p>
+
+<h1>C-f: copy from * clipboard.</h1>
+
+<p>bind C-f run "tmux set-buffer \"$(xclip -o)\"; tmux paste-buffer" \; run "tmux display \"Copied from (*) $(xclip -o | dd ibs=1 obs=1 status=noxfer count=80 2> /dev/null)... \""
+```</p>
+
+<p>this makes use of the <a href="http://sourceforge.net/projects/xclip/">xclip</a> program to access the system and selection clipboards.</p>
+
+<p>Now, while in tmux:</p>
+
+<ol>
+<li>Everytime you press the <code>prefix</code> key followed by <code>C-v</code> you will get the content of the system clipboard inside tmux.</li>
+<li>Everytime you press the <code>prefix</code> key followed by <code>C-c</code> you will be asked to choose from the list of tmux paste-buffers. The buffer selected will be put into the system clipboard.</li>
+</ol>
+
+
+<p>The same <em>copy/paste</em> behaviour can be applied to the selection clipboard by using <code>C-f</code> and <code>C-d</code>.</p>
+
+<p>Now admittedly point 1 above is not strictly necessary because there are usually system-wide shortcuts to do that, (<code>Shift-Ctrl-v</code> and <code>Shift-Insert</code> are the usual defaults in Linux) but I'm a sucker for symmetry.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Tmux: a terminal multiplexer full of niceties]]></title>
